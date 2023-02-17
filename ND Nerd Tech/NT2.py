@@ -4,6 +4,51 @@
 CONSOLE_LANGUAGE = "ENG"          
 #DO NOT DELETE STATEMENT / NE PAS EFFACER CETTE DÉCLARATION
 
+Morse_Code = { 'A':'.-', 'B':'-...',
+                    'C':'-.-.', 'D':'-..', 'E':'.',
+                    'F':'..-.', 'G':'--.', 'H':'....',
+                    'I':'..', 'J':'.---', 'K':'-.-',
+                    'L':'.-..', 'M':'--', 'N':'-.',
+                    'O':'---', 'P':'.--.', 'Q':'--.-',
+                    'R':'.-.', 'S':'...', 'T':'-',
+                    'U':'..-', 'V':'...-', 'W':'.--',
+                    'X':'-..-', 'Y':'-.--', 'Z':'--..',
+                    '1':'.----', '2':'..---', '3':'...--',
+                    '4':'....-', '5':'.....', '6':'-....',
+                    '7':'--...', '8':'---..', '9':'----.',
+                    '0':'-----', ', ':'--..--', '.':'.-.-.-',
+                    '?':'..--..', '/':'-..-.', '-':'-....-',
+                    '(':'-.--.', ')':'-.--.-'}
+
+
+def decrypt(message: str) -> str :
+    word=message.split("/")
+    result=''
+    for character in word:
+        result+=" "
+        letter=character.split()
+        for c in letter:
+            for keys in Morse_Code.keys():
+                if c == Morse_Code[keys]:
+                    result+=keys.lower()
+    return result.lstrip()    
+
+def encrypt(message: str) -> str:
+    word=message.split()
+    result=''
+    for character in word:
+        result+="/"
+        letter=list(character)
+        for c in letter:
+            result+=" "
+            for keys in Morse_Code.keys():
+                
+                if c == keys.lower():
+                    result+= Morse_Code[keys]
+
+    result=result.lstrip('/').lstrip()
+    result = result.replace("/", " /")
+    return result
 
 
 def solve(testCase):
@@ -11,6 +56,10 @@ def solve(testCase):
     # Code goes here / Votre code commence ici 
     
     
+    if text.startswith(".") or text.startswith("-"):
+        result=decrypt(text)
+    else:
+        result=encrypt(text)
     
     
     
@@ -20,7 +69,7 @@ def solve(testCase):
     
     
     
-    return     #Return test case output here / Retourner la sortie de votre code sur cette ligne
+    return result #Return test case output here / Retourner la sortie de votre code sur cette ligne
 
 
 
@@ -36,7 +85,7 @@ TESTCASES = [".--- --- -.- . ... / --- -. / -.-- --- ..-",
             "this means nothing",
             "-.-. --- ..- -.-. --- ..-",
             "why are we here",
-            "aliens en haut"
+            "alien en haut"
             ] #inputs / entrées
 
 
